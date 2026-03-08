@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaptha Creative Suite — CDN Example</title>
+  <link rel="stylesheet" href="https://code.kaptha.dev/creative/embed/editor.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    #editor { width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="editor"></div>
+
+  <script src="https://code.kaptha.dev/creative/embed/editor.js"></script>
+  <script>
+    // Create the editor instance
+    const editor = KapthaCreativeSuite.createEditor({
+      container: '#editor',
+      apiKey: 'your-api-key',
+
+      // Optional: set canvas size
+      // defaultWidth: 1080,
+      // defaultHeight: 1080,
+
+      // Optional: theme
+      // theme: 'dark',
+
+      // Save callback
+      onSave: async (data, preview) => {
+        console.log('Design saved:', data);
+        if (preview) {
+          console.log('Preview blob:', preview);
+        }
+      },
+
+      // Export callback
+      onExport: (data) => {
+        console.log('Design exported:', data);
+      },
+
+      // Image upload callback
+      onImageUpload: async (file) => {
+        // Replace with your upload logic
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // Example: upload to your server
+        // const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        // const { url } = await res.json();
+        // return { url };
+
+        // For demo: use object URL
+        return { url: URL.createObjectURL(file) };
+      },
+
+      // AI text actions (optional)
+      // onAIText: async (action, text) => {
+      //   const res = await fetch('/api/ai/text', {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({ action, text }),
+      //   });
+      //   const { result } = await res.json();
+      //   return result;
+      // },
+    });
+
+    // To destroy later:
+    // editor.destroy();
+
+    // To update props:
+    // editor.update({ theme: 'dark' });
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "name": "@actovision/kaptha-creative-suite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Kaptha Creative Suite — React canvas design editor",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -45,6 +45,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/actovision/kaptha-creative-suite"
+    "url": "https://github.com/Actovision-ORG/kaptha-creative-suite-wrapper"
   }
 }
