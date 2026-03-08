@@ -25,7 +25,7 @@ export default function App() {
 
   return (
     <KapthaCreativeSuite
-      apiKey="your-api-key"
+      apiKey="kpdv_a7dadeb552eea57fd7c3a8f83b71787e"
       style={{ width: '100vw', height: '100vh' }}
       onSave={handleSave}
       onExport={handleExport}
