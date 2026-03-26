@@ -43,6 +43,8 @@ export interface KapthaCreativeSuiteProps {
     onError?: (error: Error) => void;
     className?: string;
     theme?: ThemeMode;
+    /** Whether to render the built-in top navbar. Defaults to true. */
+    showTopNavbar?: boolean;
     defaultWidth?: number;
     defaultHeight?: number;
     templates?: Template[];

@@ -63,6 +63,7 @@ function App() {
 |------|------|----------|---------|-------------|
 | `apiKey` | `string` | Yes | — | Your API key from [app.kaptha.com](https://app.kaptha.com) |
 | `theme` | `'light' \| 'dark'` | No | `'light'` | Editor theme |
+| `showTopNavbar` | `boolean` | No | `true` | Show/hide built-in top navbar. Set to `false` to build your own. |
 | `defaultWidth` | `number` | No | — | Initial canvas width |
 | `defaultHeight` | `number` | No | — | Initial canvas height |
 | `className` | `string` | No | — | CSS class for container |
@@ -97,6 +98,38 @@ function App() {
 | `nounProjectKey` | `string` | Noun Project API key |
 | `nounProjectSecret` | `string` | Noun Project API secret |
 | `nounProjectProxyUrl` | `string` | Proxy URL for Noun Project API |
+
+## Custom Top Bar
+
+Hide the built-in navbar and build your own UI on top:
+
+```tsx
+<KapthaCreativeSuite
+  apiKey="your-api-key"
+  showTopNavbar={false}
+  style={{ width: '100vw', height: '100vh' }}
+/>
+```
+
+When `showTopNavbar={false}`, the editor renders without the top navigation bar (undo/redo, theme toggle, export buttons). Zoom controls remain visible in a floating panel at the bottom-right. Keyboard shortcuts (Ctrl+Z/Y, etc.) continue to work.
+
+> **Note:** The `useEditorActions()` hook for building custom top bar UI is available in the core package. The CDN wrapper does not expose Zustand stores or hooks directly — use the CDN bundle's `createEditor` API for programmatic control.
+
+## Container Sizing
+
+The editor fills its container using `height: 100%`. Make sure the parent element has an explicit height:
+
+```tsx
+// Good — explicit height
+<KapthaCreativeSuite style={{ width: '100vw', height: '100vh' }} />
+
+// Good — parent with height
+<div style={{ height: 600 }}>
+  <KapthaCreativeSuite apiKey="..." />
+</div>
+```
+
+If no explicit height is provided, the editor falls back to `100dvh` (full viewport height).
 
 ## Architecture
 
