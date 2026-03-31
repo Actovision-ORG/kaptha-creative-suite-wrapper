@@ -97,6 +97,10 @@ export interface KapthaCreativeSuiteProps {
   onAIImage?: (action: string, imageUrl: string) => Promise<string | null>;
   /** Backend icons API URL. Icons API handles OAuth server-side. */
   iconsApiUrl?: string;
+  /** Initial design data to auto-load into the canvas on mount */
+  initialData?: ExportData;
+  /** Template ID to auto-load from templates list on mount */
+  initialTemplateId?: string;
 }
 
 export interface EditorInstance {
