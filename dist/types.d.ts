@@ -37,6 +37,35 @@ export interface ExportData {
         background?: unknown;
     };
 }
+export interface EditorActions {
+    undo: () => void;
+    redo: () => void;
+    canUndo: boolean;
+    canRedo: boolean;
+    zoomIn: () => void;
+    zoomOut: () => void;
+    zoomLevel: number;
+    resetView: () => void;
+    fitToScreen: () => void;
+    fitAllElements: () => void;
+    exportAsPNG: (pixelRatio?: number) => void;
+    exportAsJPEG: (pixelRatio?: number, quality?: number) => void;
+    exportAsJSON: () => ExportData;
+    downloadJSON: () => void;
+    exportAsGIF: (fps?: number, pixelRatio?: number) => void;
+    exportAsWebM: (fps?: number, pixelRatio?: number) => void;
+    isExporting: boolean;
+    exportProgress: number;
+    importFromFile: () => void;
+    importFromJSON: (json: string) => boolean;
+    save: () => Promise<void>;
+    documentName: string;
+    setDocumentName: (name: string) => void;
+    theme: ThemeMode;
+    setTheme: (theme: ThemeMode) => void;
+    toggleTheme: () => void;
+    newImage: () => void;
+}
 export interface KapthaCreativeSuiteProps {
     apiKey: string;
     onReady?: () => void;
@@ -65,6 +94,10 @@ export interface KapthaCreativeSuiteProps {
     onDocumentLoad?: (docId: string) => Promise<ExportData>;
     onAIText?: (action: string, text: string) => Promise<string | null>;
     onAIImage?: (action: string, imageUrl: string) => Promise<string | null>;
+    /** Called when the editor mounts with an actions object for external control */
+    onEditorReady?: (actions: EditorActions) => void;
+    /** Backend API base URL (overrides VITE_API_URL env var) */
+    apiUrl?: string;
     /** Backend icons API URL. Icons API handles OAuth server-side. */
     iconsApiUrl?: string;
     /** Initial design data to auto-load into the canvas on mount */

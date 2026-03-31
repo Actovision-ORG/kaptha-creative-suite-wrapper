@@ -3,7 +3,7 @@ import { loadBundle, getCreateEditor } from './loader';
 import type { KapthaCreativeSuiteProps, EditorInstance } from './types';
 
 export type { KapthaCreativeSuiteProps, EditorInstance, CreateEditorOptions, CreateEditorFn } from './types';
-export type { ToolType, ThemeMode, ShapeType, PresetSize, Template, DocumentMeta, ExportData } from './types';
+export type { ToolType, ThemeMode, ShapeType, PresetSize, Template, DocumentMeta, ExportData, EditorActions } from './types';
 export { loadBundle } from './loader';
 
 interface WrapperProps extends KapthaCreativeSuiteProps {

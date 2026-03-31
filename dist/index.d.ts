@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { KapthaCreativeSuiteProps } from './types';
 export type { KapthaCreativeSuiteProps, EditorInstance, CreateEditorOptions, CreateEditorFn } from './types';
-export type { ToolType, ThemeMode, ShapeType, PresetSize, Template, DocumentMeta, ExportData } from './types';
+export type { ToolType, ThemeMode, ShapeType, PresetSize, Template, DocumentMeta, ExportData, EditorActions } from './types';
 export { loadBundle } from './loader';
 interface WrapperProps extends KapthaCreativeSuiteProps {
     /** CSS class for the container div */
