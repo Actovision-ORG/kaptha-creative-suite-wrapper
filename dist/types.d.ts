@@ -45,6 +45,8 @@ export interface KapthaCreativeSuiteProps {
     theme?: ThemeMode;
     /** Whether to render the built-in top navbar. Defaults to true. */
     showTopNavbar?: boolean;
+    /** Show "Powered by Kaptha" credit text on screen. Defaults to false. */
+    showCredit?: boolean;
     defaultWidth?: number;
     defaultHeight?: number;
     templates?: Template[];
@@ -63,9 +65,8 @@ export interface KapthaCreativeSuiteProps {
     onDocumentLoad?: (docId: string) => Promise<ExportData>;
     onAIText?: (action: string, text: string) => Promise<string | null>;
     onAIImage?: (action: string, imageUrl: string) => Promise<string | null>;
-    nounProjectKey?: string;
-    nounProjectSecret?: string;
-    nounProjectProxyUrl?: string;
+    /** Backend icons API URL. Icons API handles OAuth server-side. */
+    iconsApiUrl?: string;
 }
 export interface EditorInstance {
     destroy: () => void;
