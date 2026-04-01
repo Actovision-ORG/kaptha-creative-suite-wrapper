@@ -1,7 +1,7 @@
 import { CreateEditorFn } from './types';
 /**
  * Load the Kaptha Creative Suite CDN bundle (JS + CSS).
- * Returns a promise that resolves when the bundle is loaded.
+ * Fetches manifest.json first to get cache-busted URLs.
  * Safe to call multiple times — only loads once.
  */
 export declare function loadBundle(): Promise<void>;
