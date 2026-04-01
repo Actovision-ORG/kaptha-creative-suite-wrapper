@@ -1,37 +1,50 @@
 import type { CreateEditorFn } from './types';
 
 const CDN_BASE = 'https://code.kaptha.dev/creative/embed';
-const JS_URL = `${CDN_BASE}/editor.js`;
-const CSS_URL = `${CDN_BASE}/editor.css`;
+const MANIFEST_URL = `${CDN_BASE}/manifest.json`;
 
 let loadPromise: Promise<void> | null = null;
 
-function loadCSS(): void {
-  if (document.querySelector(`link[href="${CSS_URL}"]`)) return;
+/** Fetch manifest.json (no-cache) to get versioned URLs */
+async function getUrls(): Promise<{ js: string; css: string }> {
+  const fallback = { js: `${CDN_BASE}/editor.js`, css: `${CDN_BASE}/editor.css` };
+  try {
+    const res = await fetch(MANIFEST_URL, { cache: 'no-cache' });
+    if (!res.ok) return fallback;
+    const manifest = await res.json();
+    return {
+      js: manifest.js?.startsWith('http') ? manifest.js : `${CDN_BASE}/${manifest.js || 'editor.js'}`,
+      css: manifest.css?.startsWith('http') ? manifest.css : `${CDN_BASE}/${manifest.css || 'editor.css'}`,
+    };
+  } catch {
+    return fallback;
+  }
+}
 
+function loadCSS(url: string): void {
+  if (document.querySelector('link[href*="editor"]')) return;
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = CSS_URL;
+  link.href = url;
   document.head.appendChild(link);
 }
 
-function loadJS(): Promise<void> {
+function loadJS(url: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${JS_URL}"]`)) {
-      // Script tag exists — check if already loaded
-      if ((window as any).KapthaCreativeSuite) {
-        resolve();
-      } else {
-        // Script tag exists but not yet loaded — wait for it
-        const existing = document.querySelector(`script[src="${JS_URL}"]`) as HTMLScriptElement;
-        existing.addEventListener('load', () => resolve());
-        existing.addEventListener('error', () => reject(new Error('Failed to load Kaptha Creative Suite from CDN')));
-      }
+    if ((window as any).KapthaCreativeSuite) {
+      resolve();
+      return;
+    }
+
+    const existing = document.querySelector('script[src*="editor"]') as HTMLScriptElement;
+    if (existing) {
+      existing.addEventListener('load', () => resolve());
+      existing.addEventListener('error', () => reject(new Error('Failed to load Kaptha Creative Suite from CDN')));
       return;
     }
 
     const script = document.createElement('script');
-    script.src = JS_URL;
+    script.src = url;
     script.async = true;
     script.onload = () => resolve();
     script.onerror = () => reject(new Error('Failed to load Kaptha Creative Suite from CDN'));
@@ -41,13 +54,15 @@ function loadJS(): Promise<void> {
 
 /**
  * Load the Kaptha Creative Suite CDN bundle (JS + CSS).
- * Returns a promise that resolves when the bundle is loaded.
+ * Fetches manifest.json first to get cache-busted URLs.
  * Safe to call multiple times — only loads once.
  */
 export function loadBundle(): Promise<void> {
   if (!loadPromise) {
-    loadCSS();
-    loadPromise = loadJS();
+    loadPromise = getUrls().then(({ js, css }) => {
+      loadCSS(css);
+      return loadJS(js);
+    });
   }
   return loadPromise;
 }
