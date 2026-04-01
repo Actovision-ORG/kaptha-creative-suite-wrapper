@@ -1,89 +1,70 @@
-import { jsx as d } from "react/jsx-runtime";
-import { useRef as h, useState as m, useEffect as l } from "react";
-const c = "https://code.kaptha.dev/creative/embed", S = `${c}/manifest.json`;
+import { jsx as l } from "react/jsx-runtime";
+import { useRef as f, useState as m, useEffect as d } from "react";
+const p = "https://code.kaptha.dev/creative/embed", S = `?t=${Math.floor(Date.now() / 36e5)}`, y = `${p}/editor.js${S}`, h = `${p}/editor.css${S}`;
 let u = null;
-async function C() {
-  const t = { js: `${c}/editor.js`, css: `${c}/editor.css` };
-  try {
-    const e = await fetch(S, { cache: "no-cache" });
-    if (!e.ok) return t;
-    const r = await e.json();
-    return {
-      js: r.js?.startsWith("http") ? r.js : `${c}/${r.js || "editor.js"}`,
-      css: r.css?.startsWith("http") ? r.css : `${c}/${r.css || "editor.css"}`
-    };
-  } catch {
-    return t;
-  }
-}
-function y(t) {
-  if (document.querySelector('link[href*="editor"]')) return;
+function E() {
+  if (document.querySelector(`link[href="${h}"]`)) return;
   const e = document.createElement("link");
-  e.rel = "stylesheet", e.href = t, document.head.appendChild(e);
+  e.rel = "stylesheet", e.href = h, document.head.appendChild(e);
 }
-function E(t) {
-  return new Promise((e, r) => {
+function v() {
+  return new Promise((e, o) => {
     if (window.KapthaCreativeSuite) {
       e();
       return;
     }
-    const o = document.querySelector('script[src*="editor"]');
-    if (o) {
-      o.addEventListener("load", () => e()), o.addEventListener("error", () => r(new Error("Failed to load Kaptha Creative Suite from CDN")));
-      return;
-    }
-    const n = document.createElement("script");
-    n.src = t, n.async = !0, n.onload = () => e(), n.onerror = () => r(new Error("Failed to load Kaptha Creative Suite from CDN")), document.head.appendChild(n);
+    const t = document.createElement("script");
+    t.src = y, t.async = !0, t.onload = () => e(), t.onerror = () => o(new Error("Failed to load Kaptha Creative Suite from CDN")), document.head.appendChild(t);
   });
 }
-function v() {
-  return u || (u = C().then(({ js: t, css: e }) => (y(e), E(t)))), u;
-}
 function w() {
-  const t = window.KapthaCreativeSuite;
-  if (!t?.createEditor)
+  return u || (E(), u = v()), u;
+}
+function K() {
+  const e = window.KapthaCreativeSuite;
+  if (!e?.createEditor)
     throw new Error("[KapthaCreativeSuite] CDN bundle not loaded. Call loadBundle() first.");
-  return t.createEditor;
+  return e.createEditor;
 }
 const k = ({
-  className: t,
-  style: e,
-  onLoadError: r,
-  ...o
+  className: e,
+  style: o,
+  onLoadError: t,
+  ...a
 }) => {
-  const n = h(null), a = h(null), [s, f] = m("loading");
-  return l(() => {
-    let i = !1;
-    return v().then(() => {
-      i || f("ready");
-    }).catch((p) => {
-      i || (f("error"), r?.(p));
+  const i = f(null), r = f(null), [c, s] = m("loading");
+  return d(() => {
+    let n = !1;
+    return w().then(() => {
+      n || s("ready");
+    }).catch((C) => {
+      n || (s("error"), t?.(C));
     }), () => {
-      i = !0;
+      n = !0;
     };
-  }, []), l(() => {
-    if (!(s !== "ready" || !n.current))
-      if (a.current)
-        a.current.update(o);
+  }, []), d(() => {
+    if (!(c !== "ready" || !i.current))
+      if (r.current)
+        r.current.update(a);
       else {
-        const i = w();
-        a.current = i({
-          container: n.current,
-          ...o
+        const n = K();
+        r.current = n({
+          container: i.current,
+          ...a
         });
       }
-  }, [s, o]), l(() => () => {
-    a.current?.destroy(), a.current = null;
-  }, []), s === "error" ? /* @__PURE__ */ d("div", { className: t, style: { display: "flex", alignItems: "center", justifyContent: "center", ...e }, children: /* @__PURE__ */ d("p", { style: { color: "#ef4444", fontSize: 14 }, children: "Failed to load Kaptha Creative Suite. Please check your connection and try again." }) }) : /* @__PURE__ */ d(
+  }, [c, a]), d(() => () => {
+    r.current?.destroy(), r.current = null;
+  }, []), c === "error" ? /* @__PURE__ */ l("div", { className: e, style: { display: "flex", alignItems: "center", justifyContent: "center", ...o }, children: /* @__PURE__ */ l("p", { style: { color: "#ef4444", fontSize: 14 }, children: "Failed to load Kaptha Creative Suite. Please check your connection and try again." }) }) : /* @__PURE__ */ l(
     "div",
     {
-      ref: n,
-      className: t,
-      style: { position: "relative", ...e }
+      ref: i,
+      className: e,
+      style: { position: "relative", ...o }
     }
   );
 };
 export {
   k as KapthaCreativeSuite,
-  v as loadBundle
+  w as loadBundle
 };
