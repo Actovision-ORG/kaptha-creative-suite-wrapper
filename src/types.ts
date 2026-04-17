@@ -131,6 +131,22 @@ export interface KapthaCreativeSuiteProps {
   apiUrl?: string;
   /** Backend icons API URL. Icons API handles OAuth server-side. */
   iconsApiUrl?: string;
+  /** Separate AI backend base URL (overrides apiUrl for AI calls) */
+  aiApiUrl?: string;
+  /** API key for the AI backend (overrides apiKey for AI calls) */
+  aiApiKey?: string;
+  /** Full URL overrides for individual AI endpoints */
+  aiEndpoints?: {
+    generate?: string;
+    text?: string;
+    image?: string;
+    models?: string;
+    images?: string;
+  };
+  /** Custom headers for AI requests (replaces default x-api-key/x-origin-domain) */
+  aiHeaders?: Record<string, string>;
+  /** Fetch credentials mode for AI requests. Defaults to 'same-origin' */
+  aiCredentials?: RequestCredentials;
   /** Initial design data to auto-load into the canvas on mount */
   initialData?: ExportData;
   /** Template ID to auto-load from templates list on mount */
