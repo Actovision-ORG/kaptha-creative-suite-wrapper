@@ -74,6 +74,11 @@ function App() {
 | `googleFontsList` | `string[]` | No | — | Custom Google Fonts list |
 | `presetSizes` | `PresetSize[]` | No | — | Custom canvas size presets |
 | `documents` | `DocumentMeta[]` | No | — | Saved documents list |
+| `apiUrl` | `string` | No | — | Backend base URL (overrides env var) |
+| `iconsApiUrl` | `string` | No | — | Icons API URL (server-side OAuth proxy) |
+| `initialData` | `ExportData` | No | — | Design data to load into canvas on mount |
+| `initialTemplateId` | `string` | No | — | Template ID to auto-load on mount |
+| `showCredit` | `boolean` | No | `true` | Show "Powered by Kaptha" credit link |
 
 ### Callbacks
 
@@ -82,6 +87,7 @@ function App() {
 | `onReady` | `() => void` | Called when editor is ready (after API validation) |
 | `onError` | `(error: Error) => void` | Called on initialization error (e.g., invalid API key) |
 | `onLoadError` | `(error: Error) => void` | Called if CDN bundle fails to load |
+| `onEditorReady` | `(actions: EditorActions) => void` | Called on mount with programmatic editor controls |
 | `onSave` | `(data, preview?) => Promise<void>` | Save handler with optional preview blob |
 | `onExport` | `(data) => void` | Export handler |
 | `onImageUpload` | `(file) => Promise<{ url }>` | Image upload handler |
@@ -91,13 +97,17 @@ function App() {
 | `onAIText` | `(action, text) => Promise<string \| null>` | AI text action handler |
 | `onAIImage` | `(action, imageUrl) => Promise<string \| null>` | AI image action handler |
 
-### Noun Project Icons (Optional)
+### AI Backend (Optional)
+
+Route AI calls to a separate backend (e.g. your own AI platform) without needing `x-api-key`/`x-origin-domain` headers.
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `nounProjectKey` | `string` | Noun Project API key |
-| `nounProjectSecret` | `string` | Noun Project API secret |
-| `nounProjectProxyUrl` | `string` | Proxy URL for Noun Project API |
+| `aiApiUrl` | `string` | Base URL for AI calls (overrides `apiUrl` for AI only) |
+| `aiApiKey` | `string` | API key for AI backend (overrides `apiKey` for AI only) |
+| `aiEndpoints` | `object` | Per-endpoint URL overrides — `generate`, `text`, `image`, `models`, `images` |
+| `aiHeaders` | `Record<string, string>` | Custom request headers (replaces default `x-api-key`/`x-origin-domain`) |
+| `aiCredentials` | `RequestCredentials` | Fetch credentials mode. Defaults to `'same-origin'` |
 
 ## Custom Top Bar
 
