@@ -74,8 +74,6 @@ function App() {
 | `googleFontsList` | `string[]` | No | — | Custom Google Fonts list |
 | `presetSizes` | `PresetSize[]` | No | — | Custom canvas size presets |
 | `documents` | `DocumentMeta[]` | No | — | Saved documents list |
-| `apiUrl` | `string` | No | — | Backend base URL (overrides env var) |
-| `iconsApiUrl` | `string` | No | — | Icons API URL (server-side OAuth proxy) |
 | `initialData` | `ExportData` | No | — | Design data to load into canvas on mount |
 | `initialTemplateId` | `string` | No | — | Template ID to auto-load on mount |
 | `showCredit` | `boolean` | No | `true` | Show "Powered by Kaptha" credit link |
