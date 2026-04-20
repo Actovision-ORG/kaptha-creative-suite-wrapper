@@ -65,6 +65,16 @@ export interface EditorActions {
     setTheme: (theme: ThemeMode) => void;
     toggleTheme: () => void;
     newImage: () => void;
+    /** Render the canvas to a PNG dataURL and open it in the preview modal (no download). */
+    preview: (pixelRatio?: number) => void;
+    /** Current preview image dataURL; `null` when the modal is closed. */
+    previewImage: string | null;
+    /** Show/hide the preview modal by setting the dataURL, or `null` to close. */
+    setPreviewImage: (url: string | null) => void;
+    /** Label of the currently running slow action (e.g. 'preview', 'save', 'ai-generate'), or `null` when idle. */
+    busyAction: string | null;
+    /** Convenience flag: `true` when any slow action is running. */
+    isBusy: boolean;
 }
 export interface KapthaCreativeSuiteProps {
     apiKey: string;
