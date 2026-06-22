@@ -2,7 +2,7 @@
  * TypeScript types for Kaptha Creative Suite.
  * These mirror the types from the core package.
  */
-export type ToolType = 'templates' | 'text' | 'image' | 'elements' | 'icons' | 'draw' | 'background' | 'resize' | 'layers' | 'animate' | null;
+export type ToolType = 'templates' | 'text' | 'image' | 'elements' | 'icons' | 'draw' | 'background' | 'resize' | 'layers' | 'animate' | 'quotes' | 'qrcode' | null;
 export type ThemeMode = 'light' | 'dark';
 export type ShapeType = 'Rect' | 'Ellipse' | 'RegularPolygon' | 'Star' | 'Arc' | 'Ring' | 'Wedge' | 'Path' | 'Line' | 'Arrow' | 'Text' | 'Image' | 'Group';
 export interface PresetSize {
@@ -30,6 +30,8 @@ export interface DocumentMeta {
 }
 export interface ExportData {
     version?: number;
+    /** Document title, as entered in the editor. */
+    name?: string;
     nodes: unknown[];
     canvas: {
         width: number;

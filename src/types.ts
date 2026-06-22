@@ -14,6 +14,8 @@ export type ToolType =
   | 'resize'
   | 'layers'
   | 'animate'
+  | 'quotes'
+  | 'qrcode'
   | null;
 
 export type ThemeMode = 'light' | 'dark';
@@ -61,6 +63,8 @@ export interface DocumentMeta {
 
 export interface ExportData {
   version?: number;
+  /** Document title, as entered in the editor. */
+  name?: string;
   nodes: unknown[];
   canvas: {
     width: number;
